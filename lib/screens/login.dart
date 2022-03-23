@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:workout_application1/screens/profile.dart';
 import 'package:workout_application1/screens/register.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -10,6 +13,31 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  static Future<User?> signInWithEmailAndPassword ({
+    required String email,
+    required String password,
+    required BuildContext context
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try{
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e){
+      if(e.code == "user-not-found") {
+        print("No user found with that email.");
+      }
+    }
+    return user;
+  }
+
+  Future<FirebaseApp> _initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+  }
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
@@ -84,11 +112,20 @@ class _LoginState extends State<Login> {
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton.icon(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Processing Data')),
                                 );
+                              }
+                              User? user = await signInWithEmailAndPassword (
+                                email: _email.text,
+                                password: _password.text,
+                                context: context,
+                              );
+                              print(user);
+                              if(user != null) {
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ProfileScreen()));
                               }
                             },
                             icon: const Icon(
