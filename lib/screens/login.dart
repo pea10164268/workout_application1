@@ -10,6 +10,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,12 +28,12 @@ class _LoginState extends State<Login> {
         width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
         color: Colors.white,
-        padding: const EdgeInsets.all(40),
+        padding: const EdgeInsets.all(32),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                      "Sign in to your account!\n",
+                      "Sign in to your account!",
                       style: GoogleFonts.arvo(
                   textStyle: Theme.of(context).textTheme.headline5,
               color: Colors.black,
@@ -30,21 +41,40 @@ class _LoginState extends State<Login> {
                   ),
                   Expanded(
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         children: <Widget>[
                           TextFormField(
+                            controller: _email,
+                            maxLines: 1,
+                            keyboardType: TextInputType.emailAddress,
+                            autofocus: false,
                             decoration:
-                            const InputDecoration(labelText: 'Email Address *'),
+                            const InputDecoration(
+                              hintText: 'Email',
+                              icon: Icon(
+                                Icons.mail,
+                                color: Colors.black,
+                              )
+                            ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter an email address.';
+                                return 'Please enter your email address.';
                               }
                               return null;
                             },
                           ),
                           TextFormField(
+                            controller: _password,
+                            obscureText: true,
                             decoration:
-                            const InputDecoration(labelText: 'Password *'),
+                            const InputDecoration(
+                                hintText: 'Password',
+                                icon: Icon(
+                                  Icons.password,
+                                  color: Colors.black,
+                                )
+                            ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your password.';
@@ -55,6 +85,11 @@ class _LoginState extends State<Login> {
                           const SizedBox(height: 20),
                           ElevatedButton.icon(
                             onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Processing Data')),
+                                );
+                              }
                             },
                             icon: const Icon(
                               Icons.login_outlined,

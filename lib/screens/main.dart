@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(builder: (context) => const Register()));
                   },
                   icon: const Icon(
-                    Icons.how_to_reg_outlined,
+                    Icons.how_to_reg,
                     color: Colors.white,
                   ),
                   label: Text("Sign up",
