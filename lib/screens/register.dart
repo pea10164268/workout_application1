@@ -28,6 +28,22 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          leading: const BackButton(
+            color: Colors.black,
+          ),
+          title: Text(
+            "Register your account",
+            style: GoogleFonts.arvo(
+              textStyle: const TextStyle(fontSize: 20),
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          elevation: 0.0,
+          backgroundColor: Colors.white,
+          centerTitle: true,
+        ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -36,13 +52,6 @@ class _RegisterState extends State<Register> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-                Text(
-                  "Register your account!",
-                  style: GoogleFonts.arvo(
-                    textStyle: Theme.of(context).textTheme.headline5,
-                    color: Colors.black,
-                  ),
-                ),
               Expanded(
                 child: Form(
                   key: _formKey,
@@ -59,7 +68,12 @@ class _RegisterState extends State<Register> {
                                 icon: Icon(
                                   Icons.mail,
                                   color: Colors.black,
-                                )
+                                ),
+                            ),
+                            style: GoogleFonts.arvo(
+                              textStyle:
+                              Theme.of(context).textTheme.headline6,
+                              color: Colors.white,
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -78,6 +92,11 @@ class _RegisterState extends State<Register> {
                                   Icons.password,
                                   color: Colors.black,
                                 )
+                            ),
+                            style: GoogleFonts.arvo(
+                              textStyle:
+                              Theme.of(context).textTheme.headline6,
+                              color: Colors.white,
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {

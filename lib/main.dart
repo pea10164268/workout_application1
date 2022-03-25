@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:workout_application1/screens/registerSuccess.dart';
+import 'package:workout_application1/tabs.dart';
 import 'firebase_options.dart';
 
 import 'screens/login.dart';
@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: RegisterSuccess(),
-      debugShowCheckedModeBanner: false,
-    );
+        home: TabsScreen(),
+        debugShowCheckedModeBanner: false,
+      );
   }
 }
 
@@ -42,18 +42,18 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: _initializeFirebase(),
-        builder: (context, snapshot){
-          if(snapshot.connectionState == ConnectionState.done) {
-            return const HomeScreen();
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-        ),
+      return Scaffold(
+        body: FutureBuilder(
+          future: _initializeFirebase(),
+          builder: (context, snapshot){
+            if(snapshot.connectionState == ConnectionState.done) {
+              return const HomeScreen();
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+          ),
     );
   }
 }
