@@ -43,6 +43,8 @@ dev_dependencies:
   google_fonts: ^2.3.1
   firebase_core: ^1.13.1
   flutter_lints: ^1.0.4
+  date_time_picker: ^2.1.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
