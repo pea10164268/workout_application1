@@ -125,7 +125,7 @@ class _LoginState extends State<Login> {
                               );
                               print(user);
                               if(user != null) {
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ProfileScreen()));
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ProfileScreen()));
                               }
                             },
                             icon: const Icon(

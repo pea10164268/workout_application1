@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:workout_application1/screens/registerSuccess.dart';
 
 import 'login.dart';
 
@@ -12,8 +14,9 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _email = TextEditingController();
-  late TextEditingController _password = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final _auth = FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -85,11 +88,23 @@ class _RegisterState extends State<Register> {
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton.icon(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Processing Data')),
                                 );
+                                try {
+                                  final newUser = await _auth.createUserWithEmailAndPassword(
+                                      email: _email.text, password: _password.text);
+                                  if(newUser != null) {
+                                    Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) => const RegisterSuccess()
+                                    ));
+                                  }
+                                }
+                                catch (e) {
+                                  print(e);
+                                }
                               }
                             },
                             icon: const Icon(
