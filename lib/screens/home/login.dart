@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:workout_application1/screens/profile.dart';
-import 'package:workout_application1/screens/register.dart';
+import 'package:workout_application1/screens/home/registration/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -52,6 +52,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: const BackButton(
           color: Colors.black,
@@ -72,7 +73,7 @@ class _LoginState extends State<Login> {
         width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
         color: Colors.white,
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(20),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -86,6 +87,7 @@ class _LoginState extends State<Login> {
                             maxLines: 1,
                             keyboardType: TextInputType.emailAddress,
                             autofocus: false,
+                            textInputAction: TextInputAction.next,
                             decoration:
                             const InputDecoration(
                               hintText: 'Email',
@@ -97,7 +99,7 @@ class _LoginState extends State<Login> {
                             style: GoogleFonts.arvo(
                               textStyle:
                               Theme.of(context).textTheme.headline6,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -106,6 +108,7 @@ class _LoginState extends State<Login> {
                               return null;
                             },
                           ),
+                          const SizedBox(height: 20),
                           TextFormField(
                             controller: _password,
                             obscureText: true,
@@ -120,7 +123,7 @@ class _LoginState extends State<Login> {
                             style: GoogleFonts.arvo(
                               textStyle:
                               Theme.of(context).textTheme.headline6,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -134,7 +137,7 @@ class _LoginState extends State<Login> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Processing Data')),
+                                  const SnackBar(content: Text('Loading')),
                                 );
                               }
                               User? user = await signInWithEmailAndPassword (
@@ -151,7 +154,7 @@ class _LoginState extends State<Login> {
                               Icons.login_outlined,
                               color: Colors.white,
                             ),
-                            label: Text("Sign in",
+                            label: Text("Log in",
                               style: GoogleFonts.arvo(
                                 textStyle: Theme.of(context).textTheme.headline6,
                                 color: Colors.white,
@@ -169,7 +172,7 @@ class _LoginState extends State<Login> {
                   Text(
                     "Don't have an account?",
                     style: GoogleFonts.arvo(
-                      textStyle: Theme.of(context).textTheme.headline6,
+                      textStyle: const TextStyle(fontSize: 16),
                       color: Colors.black,
                     ),
                   ),
@@ -189,7 +192,6 @@ class _LoginState extends State<Login> {
                         ),
                       )),
               ]
-
         ),
           ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'login.dart';
+import '../login.dart';
 
 class RegisterSuccess extends StatefulWidget {
   const RegisterSuccess({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
           width: (MediaQuery.of(context).size.width),
           height: (MediaQuery.of(context).size.height),
           color: Colors.white,
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

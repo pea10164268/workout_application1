@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:workout_application1/tabs.dart';
-import 'firebase_options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../firebase_options.dart';
+import '../profile.dart';
+import 'login.dart';
+import 'registration/register.dart';
 
-import 'screens/login.dart';
-import 'screens/register.dart';
-
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        home: TabsScreen(),
+      home: HomeScreen(),
         debugShowCheckedModeBanner: false,
       );
   }
@@ -36,13 +37,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
   }
+  late User user;
+  @override
+  void initState() {
+    super.initState();
+    onRefresh(FirebaseAuth.instance.currentUser);
+  }
+
+  onRefresh(userCred) {
+    setState(() {
+      user = userCred;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
+    return Scaffold(
         body: FutureBuilder(
           future: _initializeFirebase(),
           builder: (context, snapshot){
@@ -69,6 +84,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Welcome",
+          style: GoogleFonts.arvo(
+            textStyle: Theme.of(context).textTheme.headline4,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+      ),
       body: Container(
         width: (MediaQuery.of(context).size.width),
         height: (MediaQuery.of(context).size.height),
@@ -79,15 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Column(
                 children: <Widget>[
-                  Text(
-                    "Welcome!\n",
-                    style: GoogleFonts.arvo(
-                      textStyle: Theme.of(context).textTheme.headline4,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
                   Text(
                     "Do you have an account with us?",
                     style: GoogleFonts.arvo(
@@ -120,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Text(
-                "\nOr\n",
+                "\nor\n",
                 style: GoogleFonts.arvo(
                   textStyle: Theme.of(context).textTheme.headline6,
                   color: Colors.black,
