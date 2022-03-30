@@ -45,7 +45,8 @@ class DefaultFirebaseOptions {
     appId: '1:225270434812:android:805bc0edb402d5c9740079',
     messagingSenderId: '225270434812',
     projectId: 'workout-application1',
-    databaseURL: 'https://workout-application1-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://workout-application1-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'workout-application1.appspot.com',
   );
 
@@ -54,9 +55,11 @@ class DefaultFirebaseOptions {
     appId: '1:225270434812:ios:5f393bd45585be67740079',
     messagingSenderId: '225270434812',
     projectId: 'workout-application1',
-    databaseURL: 'https://workout-application1-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://workout-application1-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'workout-application1.appspot.com',
-    iosClientId: '225270434812-ivl5bgk4865kg0o74dnv2l5n1mhhg34n.apps.googleusercontent.com',
+    iosClientId:
+        '225270434812-ivl5bgk4865kg0o74dnv2l5n1mhhg34n.apps.googleusercontent.com',
     iosBundleId: 'com.company.workou',
   );
 }
