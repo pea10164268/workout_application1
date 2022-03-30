@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:workout_application1/tabs.dart';
-import 'firebase_options.dart';
-
-import 'screens/login.dart';
-import 'screens/register.dart';
+import '../../firebase_options.dart';
+import 'login.dart';
+import '../home/registration/register.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        home: TabsScreen(),
+        home: HomeScreen(),
         debugShowCheckedModeBanner: false,
       );
   }
