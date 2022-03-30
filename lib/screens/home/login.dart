@@ -25,8 +25,8 @@ class _LoginState extends State<Login> {
         password: password,
       );
       user = userCredential.user;
-    } on FirebaseAuthException catch (e){
-      if(e.code == "user-not-found") {
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
         print("No user found with that email.");
       }
     }
@@ -37,6 +37,7 @@ class _LoginState extends State<Login> {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
   }
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
@@ -70,129 +71,121 @@ class _LoginState extends State<Login> {
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height,
         color: Colors.white,
         padding: const EdgeInsets.all(20),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            controller: _email,
-                            maxLines: 1,
-                            keyboardType: TextInputType.emailAddress,
-                            autofocus: false,
-                            textInputAction: TextInputAction.next,
-                            decoration:
-                            const InputDecoration(
-                              hintText: 'Email',
-                              icon: Icon(
-                                Icons.mail,
-                                color: Colors.black,
-                              )
-                            ),
-                            style: GoogleFonts.arvo(
-                              textStyle:
-                              Theme.of(context).textTheme.headline6,
-                              color: Colors.black,
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email address.';
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 20),
-                          TextFormField(
-                            controller: _password,
-                            obscureText: true,
-                            decoration:
-                            const InputDecoration(
-                                hintText: 'Password',
-                                icon: Icon(
-                                  Icons.password,
-                                  color: Colors.black,
-                                ),
-                            ),
-                            style: GoogleFonts.arvo(
-                              textStyle:
-                              Theme.of(context).textTheme.headline6,
-                              color: Colors.black,
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password.';
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 20),
-                          ElevatedButton.icon(
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Loading')),
-                                );
-                              }
-                              User? user = await signInWithEmailAndPassword (
-                                email: _email.text,
-                                password: _password.text,
-                                context: context,
-                              );
-                              print(user);
-                              if(user != null) {
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ProfileScreen()));
-                              }
-                            },
-                            icon: const Icon(
-                              Icons.login_outlined,
-                              color: Colors.white,
-                            ),
-                            label: Text("Log in",
-                              style: GoogleFonts.arvo(
-                                textStyle: Theme.of(context).textTheme.headline6,
-                                color: Colors.white,
-                              ),
-                            ),
-                            style: ButtonStyle(
-                              backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.black),
-                            ),
-                          ),
-                        ]
-                      )
-                    ),
-                  ),
-                  Text(
-                    "Don't have an account?",
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
+            Widget>[
+          Expanded(
+            child: Form(
+                key: _formKey,
+                child: Column(children: <Widget>[
+                  TextFormField(
+                    controller: _email,
+                    maxLines: 1,
+                    keyboardType: TextInputType.emailAddress,
+                    autofocus: false,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                        hintText: 'Email',
+                        icon: Icon(
+                          Icons.mail,
+                          color: Colors.black,
+                        )),
                     style: GoogleFonts.arvo(
-                      textStyle: const TextStyle(fontSize: 16),
+                      textStyle: Theme.of(context).textTheme.headline6,
                       color: Colors.black,
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email address.';
+                      }
+                      return null;
+                    },
                   ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => const Register()));
-                      },
-                      child: Text(
-                        "Sign up",
-                        style: GoogleFonts.arvo(
-                          textStyle: Theme.of(context).textTheme.headline6,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                          decorationThickness: 2,
-                        ),
-                      )),
-              ]
-        ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: _password,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      hintText: 'Password',
+                      icon: Icon(
+                        Icons.password,
+                        color: Colors.black,
+                      ),
+                    ),
+                    style: GoogleFonts.arvo(
+                      textStyle: Theme.of(context).textTheme.headline6,
+                      color: Colors.black,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Loading')),
+                        );
+                      }
+                      User? user = await signInWithEmailAndPassword(
+                        email: _email.text,
+                        password: _password.text,
+                        context: context,
+                      );
+                      print(user);
+                      if (user != null) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const ProfileScreen()));
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.login_outlined,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      "Log in",
+                      style: GoogleFonts.arvo(
+                        textStyle: Theme.of(context).textTheme.headline6,
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.black),
+                    ),
+                  ),
+                ])),
           ),
+          Text(
+            "Don't have an account?",
+            style: GoogleFonts.arvo(
+              textStyle: const TextStyle(fontSize: 16),
+              color: Colors.black,
+            ),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Register()));
+              },
+              child: Text(
+                "Sign up",
+                style: GoogleFonts.arvo(
+                  textStyle: Theme.of(context).textTheme.headline6,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
+                  decorationThickness: 2,
+                ),
+              )),
+        ]),
+      ),
     );
   }
 }
