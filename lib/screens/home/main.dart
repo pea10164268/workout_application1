@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
-import '../../firebase_options.dart';
-import 'login.dart';
-import 'registration/register.dart';
+import 'package:workout_application1/tabs.dart';
+import 'firebase_options.dart';
 
-Future<void> main() async {
+import 'screens/login.dart';
+import 'screens/register.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -21,9 +22,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomeScreen(),
-      debugShowCheckedModeBanner: false,
-    );
+        home: TabsScreen(),
+        debugShowCheckedModeBanner: false,
+      );
   }
 }
 
@@ -39,34 +40,20 @@ class _HomePageState extends State<HomePage> {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
   }
-
-  late User user;
-  @override
-  void initState() {
-    super.initState();
-    onRefresh(FirebaseAuth.instance.currentUser);
-  }
-
-  onRefresh(userCred) {
-    setState(() {
-      user = userCred;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: _initializeFirebase(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return const HomeScreen();
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+      return Scaffold(
+        body: FutureBuilder(
+          future: _initializeFirebase(),
+          builder: (context, snapshot){
+            if(snapshot.connectionState == ConnectionState.done) {
+              return const HomeScreen();
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+          ),
     );
   }
 }
@@ -82,19 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Welcome",
-          style: GoogleFonts.arvo(
-            textStyle: Theme.of(context).textTheme.headline4,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-      ),
       body: Container(
         width: (MediaQuery.of(context).size.width),
         height: (MediaQuery.of(context).size.height),
@@ -103,16 +77,26 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Column(children: <Widget>[
-              Text(
-                "Do you have an account with us?",
-                style: GoogleFonts.arvo(
-                  textStyle: Theme.of(context).textTheme.headline5,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ]),
+            Column(
+                children: <Widget>[
+                  Text(
+                    "Welcome!\n",
+                    style: GoogleFonts.arvo(
+                      textStyle: Theme.of(context).textTheme.headline4,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "Do you have an account with us?",
+                    style: GoogleFonts.arvo(
+                      textStyle: Theme.of(context).textTheme.headline5,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ]),
             const SizedBox(height: 20),
             Column(children: <Widget>[
               ElevatedButton.icon(
@@ -124,8 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.email,
                   color: Colors.white,
                 ),
-                label: Text(
-                  "Sign in with email",
+                label: Text("Sign in with email",
                   style: GoogleFonts.arvo(
                     textStyle: Theme.of(context).textTheme.headline6,
                     color: Colors.white,
@@ -133,11 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
+                  MaterialStateProperty.all<Color>(Colors.black),
                 ),
               ),
               Text(
-                "\nor\n",
+                "\nOr\n",
                 style: GoogleFonts.arvo(
                   textStyle: Theme.of(context).textTheme.headline6,
                   color: Colors.black,
@@ -146,17 +129,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Register()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Register()));
                 },
                 icon: const Icon(
                   Icons.how_to_reg,
                   color: Colors.white,
                 ),
-                label: Text(
-                  "Sign up",
+                label: Text("Sign up",
                   style: GoogleFonts.arvo(
                     textStyle: Theme.of(context).textTheme.headline6,
                     color: Colors.white,
@@ -164,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
+                  MaterialStateProperty.all<Color>(Colors.black),
                 ),
               ),
             ]),
