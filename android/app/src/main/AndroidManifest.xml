@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.company.workoutapplication">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-       android:label="workout_application1"
+       android:label="WorkoutApplication"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
